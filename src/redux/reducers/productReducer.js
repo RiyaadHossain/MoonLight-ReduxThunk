@@ -3,7 +3,7 @@ import {
   ADD_TO_CART,
   PRODUCT_LOADED,
   REMOVE_FROM_CART,
-  REMOVE_PRODUCT,
+  DELETE_PRODUCT,
 } from "../actionTypes/actionTypes";
 
 const initialState = {
@@ -22,7 +22,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         products: [...state.products, action.payload],
       };
-    case REMOVE_PRODUCT:
+    case DELETE_PRODUCT:
       return {
         ...state,
         products: state.products.filter(
