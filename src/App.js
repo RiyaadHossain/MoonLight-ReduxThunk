@@ -1,14 +1,19 @@
-import { Provider } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { RouterProvider } from "react-router-dom";
-import store from "./redux/store";
+import { getProduct } from "./redux/middlewares/productThunk";
 import routes from "./routes/routes";
 
 function App() {
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getProduct())
+  }, [dispatch]);
+
   return (
     <div>
-      <Provider store={store}>
-        <RouterProvider router={routes} />
-      </Provider>
+      <RouterProvider router={routes} />
     </div>
   );
 }

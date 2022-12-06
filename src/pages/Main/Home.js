@@ -1,18 +1,13 @@
 import { useDispatch, useSelector } from "react-redux"
-import React, { useEffect} from "react";
+import React from "react";
 import ProductCard from "../../components/ProductCard";
 import { toggleBrand, toggleStock } from "../../redux/actions/filterActions";
-import { getProduct } from "../../redux/middlewares/productThunk";
 
 const Home = () => {
 
   const dispatch = useDispatch()
   const { brands, stock } = useSelector(state => state.filter.filter)
   const products = useSelector(state => state.product.products)
-
-  useEffect(() => {
-    dispatch(getProduct())
-  }, [dispatch]);
 
   const activeClass = "text-white  bg-indigo-500 border-white";
   let content;

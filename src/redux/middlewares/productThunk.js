@@ -1,10 +1,10 @@
-import { ADD_PRODUCT, DELETE_PRODUCT, PRODUCT_LOADED, UPDATE_PRODUCT } from "../actionTypes/actionTypes"
+import { addProduct, loaded, removeProduct } from "../actions/productAction"
 
 export const getProduct = () => {
     return async (dispatch, getState) => {
         const res = await fetch('http://localhost:5000/products')
         const { data } = await res.json()
-        dispatch({ type: PRODUCT_LOADED, payload: data })
+        dispatch(loaded(data))
     }
 }
 
@@ -18,15 +18,21 @@ export const addProductThunk = (product) => {
             body: JSON.stringify(product)
         })
         const data = await res.json()
-        dispatch({ type: ADD_PRODUCT, payload: data })
+        dispatch(addProduct(data))
     }
 }
 
-export const updateProductThunk = () => {
+export const updateProductThunk = (id, updatedData) => {
     return async (dispatch, getState) => {
-        const res = await fetch('products.json')
-        const data = await res.json()
-        dispatch({ type: UPDATE_PRODUCT, payload: data })
+        console.log(id, updatedData);
+        const res = await fetch(`http://localhost:5000/product/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedData)
+        })
+        if (res.modifiedCount) {
+            dispatch(getProduct())
+        }
     }
 }
 
@@ -34,6 +40,6 @@ export const removeProductThunk = (id) => {
     return async (dispatch, getState) => {
         const res = await fetch(`http://localhost:5000/product/${id}`, { method: "DELETE" })
         console.log(res)
-        dispatch({ type: DELETE_PRODUCT, payload: id })
+        dispatch(removeProduct(id))
     }
 }

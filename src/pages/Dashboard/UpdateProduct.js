@@ -1,16 +1,20 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { updateProductThunk } from '../../redux/middlewares/productThunk';
 
 export default function UpdateProduct() {
 
     const { register, handleSubmit, reset } = useForm();
-
     const { id } = useParams()
     const dispatch = useDispatch()
-    const product = useSelector(state => state.product.products).find(product => product._id === id)
+    const navigate = useNavigate()
+
+    const products = useSelector(state => state.product.products)
+    if (!products.length) return
+
+    const { model, image, status, keyFeature, price, brand } = products.find(product => product._id === id)
 
     const submit = (data) => {
         const product = {
@@ -27,11 +31,10 @@ export default function UpdateProduct() {
             spec: [],
         };
 
-        dispatch(updateProductThunk(product))
+        dispatch(updateProductThunk(id, product))
         reset()
+        navigate('/dashboard')
     };
-
-    console.log(product)
 
     return (
         <div className='flex justify-center items-center h-full '>
@@ -43,29 +46,29 @@ export default function UpdateProduct() {
                     <label className='mb-2' htmlFor='model'>
                         Model
                     </label>
-                    <input type='text' id='model' {...register("model")} />
+                    <input type='text' id='model' defaultValue={model} {...register("model")} />
                 </div>
                 <div className='flex flex-col w-full max-w-xs'>
                     <label className='mb-2' htmlFor='image'>
                         Image
                     </label>
-                    <input type='text' name='image' id='image' {...register("image")} />
+                    <input type='text' name='image' id='image' defaultValue={image} {...register("image")} />
                 </div>
 
                 <div className='flex flex-col w-full max-w-xs'>
                     <label className='mb-3' htmlFor='brand'>
                         Brand
                     </label>
-                    <select name='brand' id='brand' {...register("brand")}>
+                    <select name='brand' id='brand' defaultValue={brand} {...register("brand")}>
                         <option value='amd'>AMD</option>
                         <option value='intel'>Intel</option>
                     </select>
                 </div>
                 <div className='flex flex-col w-full max-w-xs'>
                     <label className='mb-2' htmlFor='price'>
-                        Image
+                        Price
                     </label>
-                    <input type='text' name='price' id='price' {...register("price")} />
+                    <input type='text' name='price' id='price' defaultValue={price} {...register("price")} />
                 </div>
 
                 <div className='flex flex-col w-full max-w-xs'>
@@ -76,6 +79,7 @@ export default function UpdateProduct() {
                                 type='radio'
                                 id='available'
                                 value={true}
+                                defaultValue={status}
                                 {...register("status")}
                             />
                             <label className='ml-2 text-lg' htmlFor='available'>
@@ -88,6 +92,7 @@ export default function UpdateProduct() {
                                 id='stockOut'
                                 name='status'
                                 value={false}
+                                defaultValue={status}
                                 {...register("status")}
                             />
                             <label className='ml-2 text-lg' htmlFor='stockOut'>
@@ -105,6 +110,7 @@ export default function UpdateProduct() {
                         type='text'
                         name='keyFeature1'
                         id='keyFeature1'
+                        defaultValue={keyFeature[0]}
                         {...register("keyFeature1")}
                     />
                 </div>
@@ -116,6 +122,7 @@ export default function UpdateProduct() {
                         type='text'
                         name='keyFeature2'
                         id='keyFeature2'
+                        defaultValue={keyFeature[1]}
                         {...register("keyFeature2")}
                     />
                 </div>
@@ -127,6 +134,7 @@ export default function UpdateProduct() {
                         type='text'
                         name='keyFeature3'
                         id='keyFeature3'
+                        defaultValue={keyFeature[2]}
                         {...register("keyFeature3")}
                     />
                 </div>
@@ -138,6 +146,7 @@ export default function UpdateProduct() {
                         type='text'
                         name='keyFeature4'
                         id='keyFeature4'
+                        defaultValue={keyFeature[3]}
                         {...register("keyFeature4")}
                     />
                 </div>
