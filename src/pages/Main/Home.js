@@ -8,7 +8,7 @@ const Home = () => {
 
   const dispatch = useDispatch()
   const { brands, stock } = useSelector(state => state.filter.filter)
-  const products = useSelector(state => state.product.products.data)
+  const products = useSelector(state => state.product.products)
 
   useEffect(() => {
     dispatch(getProduct())
