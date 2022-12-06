@@ -8,7 +8,7 @@ const Home = () => {
 
   const dispatch = useDispatch()
   const { brands, stock } = useSelector(state => state.filter.filter)
-  const products = useSelector(state => state.product.products)
+  const products = useSelector(state => state.product.products.data)
 
   useEffect(() => {
     dispatch(getProduct())
@@ -17,7 +17,7 @@ const Home = () => {
   const activeClass = "text-white  bg-indigo-500 border-white";
   let content;
 
-  if (products.length && (stock || brands.length || true)) {
+  if (products?.length && (stock || brands?.length || true)) {
     content = products
       .filter(product => {
         if (stock) {
