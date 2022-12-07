@@ -6,5 +6,7 @@ export const UPDATE_PRODUCT = "ADD_PRODUCT";
 export const DELETE_PRODUCT = "REMOVE_PRODUCT";
 
 // Filter
+export const KEYWORD = 'KEYWORD'
 export const TOGGLE_BRAND = 'TOGGLE_BRAND'
 export const TOGGLE_STOCK = 'STOCK'
+export const CLEAR_FILTER = 'CLEAR_FILTER'

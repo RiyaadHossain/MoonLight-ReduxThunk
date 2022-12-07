@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import React from "react";
 import ProductCard from "../../components/ProductCard";
-import { toggleBrand, toggleStock } from "../../redux/actions/filterActions";
+import { toggleBrand, toggleStock, clearFilter } from "../../redux/actions/filterActions";
 
 const Home = () => {
 
   const dispatch = useDispatch()
-  const { brands, stock } = useSelector(state => state.filter.filter)
+  const { filter: { brands, stock }, keyword } = useSelector(state => state.filter)
   const products = useSelector(state => state.product.products)
 
   const activeClass = "text-white  bg-indigo-500 border-white";
@@ -14,6 +14,7 @@ const Home = () => {
 
   if (products?.length && (stock || brands?.length || true)) {
     content = products
+      .filter(product => product.model.toLowerCase().includes(keyword.toLowerCase()))
       .filter(product => {
         if (stock) {
           return product.status === true
@@ -51,9 +52,14 @@ const Home = () => {
           onClick={() => dispatch(toggleBrand('intel'))} >
           Intel
         </button>
+        <button
+          className={`border px-3 py-2 rounded-full font-semibold border-indigo-500 text-indigo-500`} /*${!brands.includes('intel amd') ? activeClass : null}*/
+          onClick={() => dispatch(clearFilter())} >
+          Clear Filter
+        </button>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14'>
-        {content}
+        {content?.length ? content : <div>Nothing to show here.</div>}
       </div>
     </div>
   );

@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { BsFillCartFill } from "react-icons/bs";
 import { IoIosListBox } from "react-icons/io";
 import { BiSearchAlt } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { search } from "../../redux/actions/filterActions";
 
 const Navbar = () => {
 
+  const dispatch = useDispatch()
   const cart = useSelector(state => state.product.cart)
 
   return (
@@ -17,6 +19,7 @@ const Navbar = () => {
         <li className='flex bg-white mx-auto h-8 w-full max-w-lg  rounded-full pr-3'>
           <input
             className='h-8 rounded-full w-full text-sm border-0 focus:ring-0 outline-none'
+            onChange={(e) => dispatch(search(e.target.value))}
             type='text'
             name='search'
             id='search'
