@@ -4,6 +4,8 @@ import {
   PRODUCT_LOADED,
   REMOVE_FROM_CART,
   DELETE_PRODUCT,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
 } from "../actionTypes/actionTypes";
 
 export const addProduct = (product) => {
@@ -30,6 +32,20 @@ export const addToCart = (product) => {
 export const removeFromCart = (product) => {
   return {
     type: REMOVE_FROM_CART,
+    payload: product,
+  };
+};
+
+export const addToWishlist = (product) => {
+  return {
+    type: ADD_TO_WISHLIST,
+    payload: product,
+  };
+};
+
+export const removeFromWishlist = (product) => {
+  return {
+    type: REMOVE_FROM_WISHLIST,
     payload: product,
   };
 };

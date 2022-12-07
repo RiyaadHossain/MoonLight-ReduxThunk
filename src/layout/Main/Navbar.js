@@ -9,7 +9,7 @@ import { search } from "../../redux/actions/filterActions";
 const Navbar = () => {
 
   const dispatch = useDispatch()
-  const cart = useSelector(state => state.product.cart)
+  const { cart, wishlist } = useSelector(state => state.product)
 
   return (
     <nav className='h-14 bg-indigo-200 rounded-full m-2 max-w-7xl mx-auto px-5'>
@@ -41,7 +41,12 @@ const Navbar = () => {
           <Link to='/dashboard'>Dashboard</Link>
         </li>
         <Link to='/'>
-          <li title='Wishlist' className='bg-indigo-500 p-2 rounded-full'>
+          <li title='Wishlist' className='bg-indigo-500 p-2 relative rounded-full'>
+            {wishlist.length > 0 &&
+              <div className=" absolute bottom-3 left-5">
+                <div className="grid place-items-center bg-teal-500 rounded-full text-white w-6 h-6">{wishlist.length}</div>
+              </div>
+            }
             <IoIosListBox className='text-white' />
           </li>
         </Link>

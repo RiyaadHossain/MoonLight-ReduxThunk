@@ -4,11 +4,14 @@ import {
   PRODUCT_LOADED,
   REMOVE_FROM_CART,
   DELETE_PRODUCT,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
 } from "../actionTypes/actionTypes";
 
 const initialState = {
   cart: [],
   products: [],
+  wishlist: []
 };
 
 const productReducer = (state = initialState, action) => {
@@ -22,6 +25,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         products: [...state.products, action.payload],
       };
+
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -29,6 +33,7 @@ const productReducer = (state = initialState, action) => {
           (product) => product._id !== action.payload
         ),
       };
+
     case ADD_TO_CART:
       if (selectedProduct) {
         const newCart = state.cart.filter(
@@ -46,6 +51,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         cart: [...state.cart, { ...action.payload, quantity: 1 }],
       };
+
     case REMOVE_FROM_CART:
       if (selectedProduct.quantity > 1) {
         const newCart = state.cart.filter(
@@ -64,6 +70,17 @@ const productReducer = (state = initialState, action) => {
           (product) => product._id !== action.payload._id
         ),
       };
+
+    case ADD_TO_WISHLIST:
+
+      const exist = state.wishlist.find(product => product._id === action.payload._id)
+      if (JSON.stringify(exist)) {
+        return { ...state }
+      }
+      return { ...state, wishlist: [...state.wishlist, action.payload] }
+
+    case REMOVE_FROM_WISHLIST:
+      return { ...state, wishlist: state.wishlist.filter(product => product !== action.payload._id) }
 
     case PRODUCT_LOADED:
       return {
