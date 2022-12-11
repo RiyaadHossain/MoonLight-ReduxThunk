@@ -2,7 +2,7 @@ import { addProduct, loaded, removeProduct } from "../actions/productAction"
 
 export const getProduct = () => {
     return async (dispatch, getState) => {
-        const res = await fetch('http://localhost:5000/products')
+        const res = await fetch('https://moon-light-server.vercel.app/products')
         const { data } = await res.json()
         dispatch(loaded(data))
     }
@@ -10,7 +10,7 @@ export const getProduct = () => {
 
 export const addProductThunk = (product) => {
     return async (dispatch, getState) => {
-        const res = await fetch('http://localhost:5000/product', {
+        const res = await fetch('https://moon-light-server.vercel.app/product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ export const addProductThunk = (product) => {
 export const updateProductThunk = (id, updatedData) => {
     return async (dispatch, getState) => {
         console.log(id, updatedData);
-        const res = await fetch(`http://localhost:5000/product/${id}`, {
+        const res = await fetch(`https://moon-light-server.vercel.app/product/${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedData)
@@ -38,7 +38,7 @@ export const updateProductThunk = (id, updatedData) => {
 
 export const removeProductThunk = (id) => {
     return async (dispatch, getState) => {
-        const res = await fetch(`http://localhost:5000/product/${id}`, { method: "DELETE" })
+        const res = await fetch(`https://moon-light-server.vercel.app/product/${id}`, { method: "DELETE" })
         console.log(res)
         dispatch(removeProduct(id))
     }
