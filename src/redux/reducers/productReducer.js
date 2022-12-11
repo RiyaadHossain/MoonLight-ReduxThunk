@@ -72,15 +72,14 @@ const productReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_WISHLIST:
-
       const exist = state.wishlist.find(product => product._id === action.payload._id)
       if (JSON.stringify(exist)) {
         return { ...state }
       }
       return { ...state, wishlist: [...state.wishlist, action.payload] }
-
-    case REMOVE_FROM_WISHLIST:
-      return { ...state, wishlist: state.wishlist.filter(product => product !== action.payload._id) }
+      
+      case REMOVE_FROM_WISHLIST:
+      return { ...state, wishlist: [...state.wishlist.filter(product => product._id !== action.payload._id)] }
 
     case PRODUCT_LOADED:
       return {

@@ -40,7 +40,7 @@ const Navbar = () => {
         <li>
           <Link to='/dashboard'>Dashboard</Link>
         </li>
-        <Link to='/'>
+        <Link to='/wishlist'>
           <li title='Wishlist' className='bg-indigo-500 p-2 relative rounded-full'>
             {wishlist.length > 0 &&
               <div className=" absolute bottom-3 left-5">
