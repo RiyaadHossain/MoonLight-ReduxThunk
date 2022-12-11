@@ -30,9 +30,9 @@ export const updateProductThunk = (id, updatedData) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedData)
         })
-        if (res.modifiedCount) {
-            dispatch(getProduct())
-        }
+        console.log(res)
+        dispatch(getProduct())
+        
     }
 }
 
